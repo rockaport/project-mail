@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.rockaport.mobile.mail.mail.R;
+import com.rockaport.mobile.mail.R;
 import com.rockaport.mobile.mail.message.Message;
 
 import java.text.SimpleDateFormat;

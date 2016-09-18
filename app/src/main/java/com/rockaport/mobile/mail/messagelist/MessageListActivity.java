@@ -11,7 +11,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 
 import com.rockaport.mobile.mail.DividerItemDecoration;
-import com.rockaport.mobile.mail.mail.R;
+import com.rockaport.mobile.mail.R;
 import com.rockaport.mobile.mail.composemessage.ComposeMessageActivity;
 import com.rockaport.mobile.mail.message.Message;
 

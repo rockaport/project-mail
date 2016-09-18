@@ -26,7 +26,6 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
 
         paint.setColor(ContextCompat.getColor(parent.getContext(), R.color.material_grey_500));
         paint.setStrokeWidth(strokeWidth);
-//        paint.setAntiAlias(true);
 
         for (int i = 0; i < parent.getChildCount() - 1; i++) {
             int width = parent.getChildAt(i).getWidth();

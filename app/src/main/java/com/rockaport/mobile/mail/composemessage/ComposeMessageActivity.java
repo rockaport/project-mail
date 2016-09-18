@@ -7,7 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
-import com.rockaport.mobile.mail.mail.R;
+import com.rockaport.mobile.mail.R;
 import com.rockaport.mobile.mail.message.Message;
 
 public class ComposeMessageActivity extends AppCompatActivity implements ComposeMessageContract.View {
