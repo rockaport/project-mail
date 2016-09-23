@@ -79,6 +79,7 @@ public class ComposeMessageActivity extends AppCompatActivity implements Compose
     public void showMessage(Message message) {
         this.message = message;
         messageText.setText(message.getMessage());
+        messageText.setSelection(message.getMessage().length());
     }
 
     Message buildMessage() {

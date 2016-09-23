@@ -7,7 +7,7 @@
     android:background="?android:attr/selectableItemBackground">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/message_icon"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginEnd="16dp"
@@ -17,7 +17,7 @@
         app:layout_constraintLeft_toLeftOf="@+id/keyline_one"
         app:layout_constraintRight_toLeftOf="@+id/keyline_two"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_add_black_24dp"
+        app:srcCompat="@drawable/ic_mail_black_24dp"
         tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
@@ -28,16 +28,35 @@
         style="@style/TextAppearance.AppCompat.Subhead"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:maxLines="1"
-        app:layout_constraintBottom_toBottomOf="@+id/date_time"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="@+id/keyline_two"
-        app:layout_constraintRight_toLeftOf="@+id/date_time"
-        app:layout_constraintTop_toTopOf="@+id/date_time"
         tools:hint="Them, Me, Me, The"
         tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1" />
+        app:layout_constraintRight_toLeftOf="@+id/num_attachments"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintTop_toTopOf="@+id/num_attachments"
+        app:layout_constraintBottom_toBottomOf="@+id/num_attachments" />
+
+    <TextView
+        android:text="4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/num_attachments"
+        app:layout_constraintRight_toLeftOf="@+id/num_attachments_icon"
+        app:layout_constraintTop_toTopOf="@+id/num_attachments_icon"
+        style="@style/TextAppearance.AppCompat.Subhead"
+        app:layout_constraintBottom_toBottomOf="@+id/num_attachments_icon"
+        android:layout_marginEnd="8dp" />
+
+    <ImageView
+        android:layout_width="18dp"
+        app:srcCompat="@drawable/ic_attachment_black_24dp"
+        android:id="@+id/num_attachments_icon"
+        app:layout_constraintRight_toLeftOf="@+id/date_time"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintTop_toTopOf="@+id/date_time"
+        app:layout_constraintBottom_toBottomOf="@+id/date_time"
+        android:layout_height="18dp" />
 
     <TextView
         android:id="@+id/date_time"
@@ -45,11 +64,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
         android:maxLines="1"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:hint="Sep 16" />
+        tools:hint="Sep 16"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/body"

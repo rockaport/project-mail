@@ -5,6 +5,6 @@ import com.rockaport.mobile.mail.database.MemoryDatabase;
 
 public class Injection {
     public static DatabaseApi provideDatabase() {
-        return new MemoryDatabase();
+        return MemoryDatabase.getInstance();
     }
 }

@@ -1,10 +1,16 @@
 package com.rockaport.mobile.mail.message;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Message {
     private long id;
-    private String message;
+    private TYPE type;
+    private STATUS status;
     private long dateTime;
     private long parentId;
+    private String message;
+    private List<Attachment> attachments = new ArrayList<>();
 
     public long getId() {
         return id;
@@ -14,12 +20,20 @@ public class Message {
         this.id = id;
     }
 
-    public String getMessage() {
-        return message;
+    public TYPE getType() {
+        return type;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setType(TYPE type) {
+        this.type = type;
+    }
+
+    public STATUS getStatus() {
+        return status;
+    }
+
+    public void setStatus(STATUS status) {
+        this.status = status;
     }
 
     public long getDateTime() {
@@ -38,7 +52,39 @@ public class Message {
         this.parentId = parentId;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public List<Attachment> getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(List<Attachment> attachments) {
+        this.attachments = attachments;
+    }
+
     public boolean isNew() {
         return id <= 0;
+    }
+
+    public int getAttachmentCount() {
+        return attachments.size();
+    }
+
+    public enum TYPE {
+        OUTGOING,
+        INCOMING
+    }
+
+    public enum STATUS {
+        NONE,
+        READ,
+        UNREAD,
+        DRAFT
     }
 }

@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rockaport.mobile.mail.R;
@@ -39,9 +40,22 @@ class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.ViewHol
     public void onBindViewHolder(ViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder() called with: holder = [" + holder + "], position = [" + position + "]");
 
+        switch (messages.get(position).getType()) {
+
+        }
         holder.people.setText(new LoremIpsum().getWords(new Random().nextInt(8) + 4));
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM dd", Locale.getDefault());
         holder.dateTime.setText(simpleDateFormat.format(new Date(messages.get(position).getDateTime())));
+//        holder.dateTime.setText(String.valueOf(messages.get(position).getDateTime()));
+
+        if (messages.get(position).getAttachmentCount() > 0) {
+            holder.numAttachments.setText(String.valueOf(messages.get(position).getAttachmentCount()));
+            holder.numAttachmentsIcon.setVisibility(View.VISIBLE);
+        } else {
+            holder.numAttachments.setVisibility(View.GONE);
+            holder.numAttachmentsIcon.setVisibility(View.GONE);
+        }
+
         holder.body.setText(messages.get(position).getMessage());
 
         holder.itemView.setOnClickListener(view -> {
@@ -83,15 +97,21 @@ class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.ViewHol
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
+        ImageView messageIcon;
         TextView people;
         TextView dateTime;
+        TextView numAttachments;
+        ImageView numAttachmentsIcon;
         TextView body;
 
         ViewHolder(View itemView) {
             super(itemView);
 
+            messageIcon = (ImageView) itemView.findViewById(R.id.message_icon);
             people = (TextView) itemView.findViewById(R.id.people);
             dateTime = (TextView) itemView.findViewById(R.id.date_time);
+            numAttachments = (TextView) itemView.findViewById(R.id.num_attachments);
+            numAttachmentsIcon = (ImageView) itemView.findViewById(R.id.num_attachments_icon);
             body = (TextView) itemView.findViewById(R.id.body);
 
         }
