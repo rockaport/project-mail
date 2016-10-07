@@ -1,13 +1,10 @@
 package com.rockaport.mobile.mail.database;
 
-import android.util.Log;
-import android.util.LongSparseArray;
-
 import com.rockaport.mobile.mail.message.Attachment;
 import com.rockaport.mobile.mail.message.Message;
-import com.rockaport.mobile.mail.message.MessageUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -15,10 +12,13 @@ public class MemoryDatabase implements DatabaseApi {
     private static final String TAG = "MemoryDatabase";
     private static AtomicLong messageRowId = new AtomicLong(0);
     private static AtomicLong attachmentRowId = new AtomicLong(0);
-    private static LongSparseArray<Message> messages = new LongSparseArray<>();
-    private static LongSparseArray<Attachment> attachments = new LongSparseArray<>();
+    private static HashMap<Long, Message> messages = new HashMap<>();
+    private static HashMap<Long, Attachment> attachments = new HashMap<>();
 
     private static MemoryDatabase instance = null;
+
+    private MemoryDatabase() {
+    }
 
     public static MemoryDatabase getInstance() {
         if (instance == null) {
@@ -28,16 +28,8 @@ public class MemoryDatabase implements DatabaseApi {
         return instance;
     }
 
-    private MemoryDatabase() {
-        for (Message message : MessageUtil.generateRandomMessages()) {
-            saveMessage(message);
-        }
-    }
-
     @Override
     public void saveMessage(Message message) {
-        Log.d(TAG, "saveMessage() called with: message = [" + message + "]");
-
         if (message.isNew()) {
             message.setId(messageRowId.incrementAndGet());
         }
@@ -52,37 +44,25 @@ public class MemoryDatabase implements DatabaseApi {
 
     @Override
     public Message getMessageById(long id) throws MessageNotFoundException {
-        Log.d(TAG, "getMessageById() called with: id = [" + id + "]");
-
         Message message = messages.get(id);
 
         if (message == null) {
             throw new MessageNotFoundException();
         }
 
-        message.setAttachments(getAttachmentsByMessageId(message.getId()));
+        message.setAttachments(getAttachmentsByMessageId(id));
 
         return message;
     }
 
     @Override
     public void deleteMessageById(long id) {
-        Log.d(TAG, "deleteMessageById() called with: id = [" + id + "]");
-
         messages.remove(id);
     }
 
     @Override
     public List<Message> getMessages() {
-        Log.d(TAG, "getMessages() called");
-
-        ArrayList<Message> messagesList = new ArrayList<>(messages.size());
-
-        for (int i = 0; i < messages.size(); i++) {
-            messagesList.add(messages.get(messages.keyAt(i)));
-        }
-
-        return messagesList;
+        return new ArrayList<>(messages.values());
     }
 
     @Override
@@ -108,11 +88,7 @@ public class MemoryDatabase implements DatabaseApi {
     @Override
     public List<Attachment> getAttachmentsByMessageId(long messageId) {
         List<Attachment> attachmentsList = new ArrayList<>();
-
-        Attachment attachment;
-        for (int i = 0; i < attachments.size(); i++) {
-            attachment = attachments.get(attachments.keyAt(i));
-
+        for (Attachment attachment : attachments.values()) {
             if (attachment.getMessageId() == messageId) {
                 attachmentsList.add(attachment);
             }
@@ -123,21 +99,21 @@ public class MemoryDatabase implements DatabaseApi {
 
     @Override
     public void deleteAttachmentById(long id) {
-        attachments.delete(id);
+        attachments.remove(id);
     }
 
     @Override
     public void deleteAttachmentsByMessageId(long messageId) {
         List<Long> rowIds = new ArrayList<>();
 
-        for (int i = 0; i < attachments.size(); i++) {
-            if (attachments.get(attachments.keyAt(i)).getMessageId() == messageId) {
-                rowIds.add(attachments.keyAt(i));
+        for (Attachment attachment : attachments.values()) {
+            if (attachment.getMessageId() == messageId) {
+                rowIds.add(attachment.getId());
             }
         }
 
         for (long rowId : rowIds) {
-            attachments.delete(rowId);
+            attachments.remove(rowId);
         }
     }
 }

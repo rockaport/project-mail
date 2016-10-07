@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.rockaport.mobile.mail.mail.com.example.rockaport.mail.composemessage.ComposeMessageActivity">
+    tools:context="com.rockaport.mobile.mail.composemessage.ComposeMessageActivity">
 
     <EditText
         android:id="@+id/message"
@@ -12,7 +12,7 @@
         android:layout_height="0dp"
         android:background="@null"
         android:gravity="top"
-        android:hint="Some message"
+        android:hint="@string/hint_compose_message"
         android:inputType="textCapSentences|textAutoComplete|textLongMessage|textMultiLine"
         android:padding="16dp"
         android:scrollbarStyle="outsideOverlay"

@@ -4,12 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Message {
+    // The sql id of this message
     private long id;
+    // The message type
     private TYPE type;
+    // The message status
     private STATUS status;
+    // The unix time of this message
     private long dateTime;
+    // The parent of this message
     private long parentId;
-    private String message;
+    // The message body
+    private String message = "";
+    // List of attachments
     private List<Attachment> attachments = new ArrayList<>();
 
     public long getId() {

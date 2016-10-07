@@ -1,15 +1,25 @@
 package com.rockaport.mobile.mail.composemessage;
 
-import com.rockaport.mobile.mail.message.Message;
+import android.os.ParcelFileDescriptor;
 
-public class ComposeMessageContract {
+class ComposeMessageContract {
     interface View {
-        void showMessage(Message message);
+        void showMessage(String message);
+
+        void displayFilePicker();
     }
 
     interface Presenter {
-        void saveMessage(Message message);
+        void saveMessage(String message);
 
         void loadMessage(long id);
+
+        void sendMessage();
+
+        void deleteMessage();
+
+        void getFile();
+
+        void attachFile(String fileName, ParcelFileDescriptor file);
     }
 }

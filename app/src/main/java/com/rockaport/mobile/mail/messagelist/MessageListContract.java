@@ -4,9 +4,9 @@ import com.rockaport.mobile.mail.message.Message;
 
 import java.util.List;
 
-public class MessageListContract {
+class MessageListContract {
     interface View {
-        void removeMessage(int position);
+        void removeMessage(long messageId);
 
         void showComposeMessage();
 
@@ -18,11 +18,9 @@ public class MessageListContract {
     }
 
     interface ListView {
-        void showMessage(Message message);
-
         void showMessages(List<Message> messages);
 
-        void removeMessage(int position);
+        void removeMessage(long messageId);
     }
 
     interface Presenter {
@@ -30,7 +28,7 @@ public class MessageListContract {
 
         void openMessage(long messageId);
 
-        void deleteMessage(int position, long messageId);
+        void deleteMessage(long messageId);
 
         void loadMessages();
     }

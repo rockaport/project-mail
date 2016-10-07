@@ -1,6 +1,5 @@
 package com.rockaport.mobile.mail.messagelist;
 
-import com.rockaport.mobile.mail.Injection;
 import com.rockaport.mobile.mail.database.DatabaseApi;
 
 import rx.Completable;
@@ -8,13 +7,17 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class MessageListPresenter implements MessageListContract.Presenter {
+class MessageListPresenter implements MessageListContract.Presenter {
     private MessageListContract.View view;
     private DatabaseApi databaseApi;
 
-    public MessageListPresenter(MessageListContract.View view) {
+    MessageListPresenter(MessageListContract.View view, DatabaseApi databaseApi) {
+        if (view == null || databaseApi == null) {
+            throw new RuntimeException("View or database is null");
+        }
+
         this.view = view;
-        databaseApi = Injection.provideDatabase();
+        this.databaseApi = databaseApi;
     }
 
     @Override
@@ -28,8 +31,8 @@ public class MessageListPresenter implements MessageListContract.Presenter {
     }
 
     @Override
-    public void deleteMessage(int position, long messageId) {
-        view.removeMessage(position);
+    public void deleteMessage(long messageId) {
+        view.removeMessage(messageId);
 
         Completable.fromAction(() -> databaseApi.deleteMessageById(messageId))
                 .subscribeOn(Schedulers.io())

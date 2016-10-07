@@ -5,11 +5,16 @@
     <item
         android:id="@+id/action_attach_file"
         android:icon="@drawable/ic_attachment_white_24dp"
-        android:title="Attach File"
-        app:showAsAction="always" />
+        android:title="@string/attach_file"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_send"
         android:icon="@drawable/ic_send_white_24dp"
-        android:title="Send"
-        app:showAsAction="always" />
+        android:title="@string/send"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_delete"
+        android:icon="@drawable/ic_delete_white_24dp"
+        android:title="@string/delete"
+        app:showAsAction="never" />
 </menu>

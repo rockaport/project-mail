@@ -1,10 +1,15 @@
 package com.rockaport.mobile.mail.message;
 
 public class Attachment {
+    // The sql id of this attachment
     private long id;
+    // The sql id of the message
     private long messageId;
+    // The size of this attachment
     private long size;
+    // The path where the attachment is located
     private String path;
+    // The file name // TODO: might remove and just use path
     private String fileName;
 
     public long getId() {

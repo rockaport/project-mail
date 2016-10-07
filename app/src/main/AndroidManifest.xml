@@ -3,27 +3,28 @@
     package="com.rockaport.mobile.mail">
 
     <application
+        android:name=".MainApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name="com.rockaport.mobile.mail.messagelist.MessageListActivity">
+        <activity android:name=".messagelist.MessageListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="com.rockaport.mobile.mail.composemessage.ComposeMessageActivity"
+            android:name=".composemessage.ComposeMessageActivity"
             android:label="@string/title_activity_compose_message"
-            android:parentActivityName="com.rockaport.mobile.mail.messagelist.MessageListActivity">
+            android:parentActivityName=".messagelist.MessageListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.rockaport.mobile.mail.messagelist.MessageListActivity" />
         </activity>
+        <activity android:name=".viewmessage.ViewMessageActivity"></activity>
     </application>
+
 </manifest>

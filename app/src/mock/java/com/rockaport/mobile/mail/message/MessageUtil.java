@@ -39,7 +39,7 @@ public class MessageUtil {
         return messages;
     }
 
-    public static Attachment generateRandomAttachment() {
+    private static Attachment generateRandomAttachment() {
         Attachment attachment = new Attachment();
 
         attachment.setFileName(new LoremIpsum().getWords(1, random.nextInt(49)));

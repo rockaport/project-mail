@@ -39,15 +39,19 @@ class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.ViewHol
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder() called with: holder = [" + holder + "], position = [" + position + "]");
+        Message message = messages.get(holder.getAdapterPosition());
 
-        switch (messages.get(position).getType()) {
+        // Update the sql id for this view
+        holder.messageId = message.getId();
 
-        }
+        // Update the list of people
         holder.people.setText(new LoremIpsum().getWords(new Random().nextInt(8) + 4));
+
+        // Update the date
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM dd", Locale.getDefault());
         holder.dateTime.setText(simpleDateFormat.format(new Date(messages.get(position).getDateTime())));
-//        holder.dateTime.setText(String.valueOf(messages.get(position).getDateTime()));
 
+        // Update the number of attachments
         if (messages.get(position).getAttachmentCount() > 0) {
             holder.numAttachments.setText(String.valueOf(messages.get(position).getAttachmentCount()));
             holder.numAttachmentsIcon.setVisibility(View.VISIBLE);
@@ -56,8 +60,10 @@ class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.ViewHol
             holder.numAttachmentsIcon.setVisibility(View.GONE);
         }
 
+        // Show a snippet of the message body
         holder.body.setText(messages.get(position).getMessage());
 
+        // Update the click listener
         holder.itemView.setOnClickListener(view -> {
             Log.d(TAG, "onClick() called with: view = [" + view + "], position = [" + holder.getAdapterPosition() + "]");
             presenter.openMessage(messages.get(holder.getAdapterPosition()).getId());
@@ -67,14 +73,6 @@ class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.ViewHol
     @Override
     public int getItemCount() {
         return messages.size();
-    }
-
-    @Override
-    public void showMessage(Message message) {
-        Log.d(TAG, "showMessage() called with: message = [" + message + "]");
-
-        messages.add(message);
-        notifyItemInserted(messages.size() - 1);
     }
 
     @Override
@@ -88,15 +86,21 @@ class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.ViewHol
     }
 
     @Override
-    public void removeMessage(int position) {
-        Log.d(TAG, "removeMessage() called with: position = [" + position + "]");
+    public void removeMessage(long messageId) {
+        Log.d(TAG, "removeMessage() called with: messageId = [" + messageId + "]");
 
-        messages.remove(position);
+        for (int i = 0; i < messages.size(); i++) {
+            if (messages.get(i).getId() == messageId) {
+                messages.remove(i);
+                notifyItemRemoved(i);
 
-        notifyItemRemoved(position);
+                break;
+            }
+        }
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
+        long messageId;
         ImageView messageIcon;
         TextView people;
         TextView dateTime;

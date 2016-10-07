@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">Android Testing</string>
     <string name="title_activity_compose_message">Compose Message</string>
+    <string name="delete">Delete</string>
+    <string name="send">Send</string>
+    <string name="attach_file">Attach File</string>
+    <string name="reply">Reply</string>
+    <string name="acc_message_icon">message icon</string>
+    <string name="acc_num_attachments_icon">number of attachments</string>
+    <string name="hint_compose_message">Start typing</string>
 </resources>

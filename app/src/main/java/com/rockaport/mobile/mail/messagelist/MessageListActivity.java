@@ -11,20 +11,29 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 
 import com.rockaport.mobile.mail.DividerItemDecoration;
+import com.rockaport.mobile.mail.Injection;
 import com.rockaport.mobile.mail.R;
 import com.rockaport.mobile.mail.composemessage.ComposeMessageActivity;
 import com.rockaport.mobile.mail.message.Message;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class MessageListActivity extends AppCompatActivity implements MessageListContract.View {
+    public static final int REQUEST_CODE = (0x0000ffff & MessageListActivity.class.hashCode());
     private static final String TAG = "MessageListActivity";
-    MessageListContract.Presenter presenter;
 
-    private SwipeRefreshLayout swipeRefreshLayout;
-    private RecyclerView recyclerView;
-    private FloatingActionButton floatingActionButton;
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
+    @BindView(R.id.swipe_refresh_layout)
+    SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.floating_action_button)
+    FloatingActionButton floatingActionButton;
 
+    private MessageListContract.Presenter presenter;
     private MessageListAdapter adapter;
 
     @Override
@@ -32,70 +41,64 @@ public class MessageListActivity extends AppCompatActivity implements MessageLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_list);
 
-        presenter = new MessageListPresenter(this);
+        presenter = new MessageListPresenter(this, Injection.provideDatabase());
 
-        bindViews();
+        ButterKnife.bind(this);
 
         setupRecyclerView();
-
-        floatingActionButton.setOnClickListener(view -> presenter.composeMessage());
     }
 
-    private void bindViews() {
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
-
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        floatingActionButton = (FloatingActionButton) findViewById(R.id.floating_action_button);
+    @OnClick(R.id.floating_action_button)
+    public void onFloatingActionButtonClicked(FloatingActionButton floatingActionButton) {
+        presenter.composeMessage();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         Log.d(TAG, "onResume() called");
-
-
         presenter.loadMessages();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode != REQUEST_CODE) {
+            return;
+        }
+
+        // TODO: stuff
     }
 
     private void setupRecyclerView() {
         adapter = new MessageListAdapter(presenter);
-        recyclerView.setAdapter(adapter);
 
+        recyclerView.setAdapter(adapter);
+        recyclerView.addItemDecoration(new DividerItemDecoration());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-            @Override
-            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                return false;
-            }
-
-            @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                Log.d(TAG, "onSwiped() called with: viewHolder = [" + viewHolder + "], direction = [" + direction + "]");
-                presenter.deleteMessage(viewHolder.getAdapterPosition(), 0);
-            }
-        }).attachToRecyclerView(recyclerView);
-
-        recyclerView.addItemDecoration(new DividerItemDecoration());
+        new ItemTouchHelper(new MessageListItemTouchHelper(presenter)).attachToRecyclerView(recyclerView);
 
         swipeRefreshLayout.setColorSchemeResources(R.color.material_blue_500, R.color.material_blue_300, R.color.material_blue_100);
         swipeRefreshLayout.setOnRefreshListener(() -> presenter.loadMessages());
     }
 
     @Override
-    public void removeMessage(int position) {
-        adapter.removeMessage(position);
+    public void removeMessage(long messageId) {
+        adapter.removeMessage(messageId);
     }
 
     @Override
     public void showComposeMessage() {
-        startActivity(new Intent(this, ComposeMessageActivity.class));
+        startActivityForResult(new Intent(this, ComposeMessageActivity.class), REQUEST_CODE);
     }
 
     @Override
     public void showMessage(long messageId) {
         Intent intent = new Intent(this, ComposeMessageActivity.class);
-        intent.putExtra(ComposeMessageActivity.MESSAGE_ID_EXTRA, messageId);
+
+        intent.putExtra(ComposeMessageActivity.EXTRA_MESSAGE_ID, messageId);
 
         startActivity(intent);
     }

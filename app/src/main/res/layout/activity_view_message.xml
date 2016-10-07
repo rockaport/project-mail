@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_view_message"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.rockaport.mobile.mail.viewmessage.ViewMessageActivity">
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:fabSize="normal"
+        app:srcCompat="@drawable/ic_reply_white_24dp"
+        android:id="@+id/floatingActionButton"
+        tools:layout_editor_absoluteY="439dp"
+        tools:layout_editor_absoluteX="312dp" />
+
+    <TextView
+        android:id="@+id/message"
+        android:layout_width="352dp"
+        android:layout_height="479dp"
+        tools:layout_editor_absoluteY="16dp"
+        tools:layout_editor_absoluteX="16dp"
+        android:text="message" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteY="16dp"
+        tools:layout_editor_absoluteX="200dp"
+        android:id="@+id/date_time" />
+
+</android.support.constraint.ConstraintLayout>
