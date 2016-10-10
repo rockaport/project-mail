@@ -1,7 +1,7 @@
 package com.rockaport.mobile.mail.viewmessage;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.rockaport.mobile.mail.R;
 

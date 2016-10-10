@@ -1,4 +1,4 @@
-package com.rockaport.mobile.mail.messagelist;
+package com.rockaport.mobile.mail.messagelist.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -9,7 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rockaport.mobile.mail.R;
-import com.rockaport.mobile.mail.message.Message;
+import com.rockaport.mobile.mail.messagelist.MessageListContract;
+import com.rockaport.mobile.mail.models.message.Message;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,12 +21,12 @@ import java.util.Random;
 
 import de.svenjacobs.loremipsum.LoremIpsum;
 
-class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.ViewHolder> implements MessageListContract.ListView {
+public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.ViewHolder> implements MessageListContract.ListView {
     private static final String TAG = "MessageListAdapter";
     private MessageListContract.Presenter presenter;
     private List<Message> messages = new ArrayList<>();
 
-    MessageListAdapter(MessageListContract.Presenter presenter) {
+    public MessageListAdapter(MessageListContract.Presenter presenter) {
         this.presenter = presenter;
     }
 
@@ -38,11 +39,25 @@ class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.ViewHol
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Log.d(TAG, "onBindViewHolder() called with: holder = [" + holder + "], position = [" + position + "]");
         Message message = messages.get(holder.getAdapterPosition());
 
         // Update the sql id for this view
         holder.messageId = message.getId();
+
+        // Update the status icon
+        switch (message.getStatus()) {
+            case NONE:
+                break;
+            case READ:
+                holder.messageIcon.setImageResource(R.drawable.ic_read_message_black_24dp);
+                break;
+            case UNREAD:
+                holder.messageIcon.setImageResource(R.drawable.ic_message_black_24dp);
+                break;
+            case DRAFT:
+                holder.messageIcon.setImageResource(R.drawable.ic_draft_message_black_24dp);
+                break;
+        }
 
         // Update the list of people
         holder.people.setText(new LoremIpsum().getWords(new Random().nextInt(8) + 4));
@@ -99,7 +114,7 @@ class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.ViewHol
         }
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         long messageId;
         ImageView messageIcon;
         TextView people;
@@ -118,6 +133,10 @@ class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.ViewHol
             numAttachmentsIcon = (ImageView) itemView.findViewById(R.id.num_attachments_icon);
             body = (TextView) itemView.findViewById(R.id.body);
 
+        }
+
+        public long getMessageId() {
+            return messageId;
         }
     }
 }

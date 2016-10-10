@@ -7,30 +7,62 @@
     android:layout_height="match_parent"
     tools:context="com.rockaport.mobile.mail.viewmessage.ViewMessageActivity">
 
-    <android.support.design.widget.FloatingActionButton
+    <ImageView
+        android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:padding="12dp"
+        android:tint="@color/material_green_500"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_person_black_24dp"
+        tools:layout_constraintTop_creator="1" />
+
+    <TextView
+        android:id="@+id/date_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="8dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toRightOf="@+id/imageView"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView"
+        tools:text="Sep 24" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/replyButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
         android:clickable="true"
         app:fabSize="normal"
-        app:srcCompat="@drawable/ic_reply_white_24dp"
-        android:id="@+id/floatingActionButton"
-        tools:layout_editor_absoluteY="439dp"
-        tools:layout_editor_absoluteX="312dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:srcCompat="@drawable/ic_reply_white_24dp" />
 
     <TextView
         android:id="@+id/message"
-        android:layout_width="352dp"
-        android:layout_height="479dp"
-        tools:layout_editor_absoluteY="16dp"
-        tools:layout_editor_absoluteX="16dp"
-        android:text="message" />
-
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteY="16dp"
-        tools:layout_editor_absoluteX="200dp"
-        android:id="@+id/date_time" />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1"
+        tools:text="Cras dapibus condimentum mauris in rhoncus. Nam at urna lectus. Etiam porta erat vel lorem dapibus ultricies. Morbi hendrerit volutpat nibh, sed hendrerit sem. Ut ac risus suscipit, condimentum felis vel, laoreet nibh. Curabitur a efficitur dui. Curabitur non neque vitae turpis finibus facilisis et vitae urna. Integer dui est, malesuada nec elit quis, efficitur posuere urna. Maecenas accumsan rutrum ipsum at lacinia. Sed interdum massa augue, non sollicitudin neque iaculis a. Donec euismod magna sed sapien malesuada, at vulputate elit finibus." />
 
 </android.support.constraint.ConstraintLayout>

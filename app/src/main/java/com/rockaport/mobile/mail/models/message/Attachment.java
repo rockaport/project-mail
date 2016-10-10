@@ -1,4 +1,4 @@
-package com.rockaport.mobile.mail.message;
+package com.rockaport.mobile.mail.models.message;
 
 public class Attachment {
     // The sql id of this attachment

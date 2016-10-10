@@ -7,6 +7,8 @@ class ComposeMessageContract {
         void showMessage(String message);
 
         void displayFilePicker();
+
+        void close();
     }
 
     interface Presenter {

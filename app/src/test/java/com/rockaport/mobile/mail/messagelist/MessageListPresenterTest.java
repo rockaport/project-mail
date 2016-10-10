@@ -1,7 +1,7 @@
 package com.rockaport.mobile.mail.messagelist;
 
 import com.rockaport.mobile.mail.Injection;
-import com.rockaport.mobile.mail.message.Message;
+import com.rockaport.mobile.mail.models.message.Message;
 
 import org.junit.After;
 import org.junit.Before;

@@ -135,8 +135,6 @@ public class ComposeMessageActivity extends AppCompatActivity implements Compose
         messageText.addTextChangedListener(textWatcher);
 
         textChangedSubject.debounce(TEXT_CHANGED_DEBOUNCE, TimeUnit.MILLISECONDS).subscribe(subscriber);
-
-        invalidateOptionsMenu();
     }
 
     @Override
@@ -155,5 +153,10 @@ public class ComposeMessageActivity extends AppCompatActivity implements Compose
         }
 
         startActivityForResult(intent, REQUEST_CODE);
+    }
+
+    @Override
+    public void close() {
+        finish();
     }
 }

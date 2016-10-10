@@ -5,14 +5,13 @@ import android.util.Log;
 
 import com.rockaport.mobile.mail.Injection;
 import com.rockaport.mobile.mail.database.DatabaseApi;
-import com.rockaport.mobile.mail.message.Attachment;
-import com.rockaport.mobile.mail.message.Message;
+import com.rockaport.mobile.mail.models.message.Attachment;
+import com.rockaport.mobile.mail.models.message.Message;
 import com.rockaport.mobile.mail.transport.TransportApi;
 
 import rx.Completable;
 import rx.Observable;
 import rx.Subscriber;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 class ComposeMessagePresenter implements ComposeMessageContract.Presenter {
@@ -70,12 +69,18 @@ class ComposeMessagePresenter implements ComposeMessageContract.Presenter {
 
     @Override
     public void sendMessage() {
-        transportApi.send(new Message());
+        Completable.fromAction(() -> transportApi.send(new Message()))
+                .subscribe(() -> {
+                    view.close();
+                });
     }
 
     @Override
     public void deleteMessage() {
-        databaseApi.deleteMessageById(message.getId());
+        Completable.fromAction(() -> databaseApi.deleteMessageById(message.getId()))
+                .subscribe(() -> {
+                    view.close();
+                });
     }
 
     @Override
@@ -92,5 +97,9 @@ class ComposeMessagePresenter implements ComposeMessageContract.Presenter {
         attachment.setPath(fileName);
 
         message.getAttachments().add(attachment);
+
+        Completable.fromAction(() -> databaseApi.saveMessage(message)).toObservable()
+                .subscribeOn(Schedulers.io())
+                .subscribe();
     }
 }

@@ -1,7 +1,9 @@
 package com.rockaport.mobile.mail.database;
 
-import com.rockaport.mobile.mail.message.Attachment;
-import com.rockaport.mobile.mail.message.Message;
+import android.util.Log;
+
+import com.rockaport.mobile.mail.models.message.Attachment;
+import com.rockaport.mobile.mail.models.message.Message;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,6 +32,7 @@ public class MemoryDatabase implements DatabaseApi {
 
     @Override
     public void saveMessage(Message message) {
+        Log.d(TAG, "saveMessage() called with: message = [" + message + "]");
         if (message.isNew()) {
             message.setId(messageRowId.incrementAndGet());
         }

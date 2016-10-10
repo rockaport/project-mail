@@ -1,7 +1,7 @@
 package com.rockaport.mobile.mail.database;
 
-import com.rockaport.mobile.mail.message.Attachment;
-import com.rockaport.mobile.mail.message.Message;
+import com.rockaport.mobile.mail.models.message.Attachment;
+import com.rockaport.mobile.mail.models.message.Message;
 
 import java.util.List;
 

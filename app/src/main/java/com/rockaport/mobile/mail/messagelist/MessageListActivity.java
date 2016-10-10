@@ -14,7 +14,8 @@ import com.rockaport.mobile.mail.DividerItemDecoration;
 import com.rockaport.mobile.mail.Injection;
 import com.rockaport.mobile.mail.R;
 import com.rockaport.mobile.mail.composemessage.ComposeMessageActivity;
-import com.rockaport.mobile.mail.message.Message;
+import com.rockaport.mobile.mail.messagelist.adapters.MessageListAdapter;
+import com.rockaport.mobile.mail.models.message.Message;
 
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class MessageListActivity extends AppCompatActivity implements MessageLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_list);
 
-        presenter = new MessageListPresenter(this, Injection.provideDatabase());
+        presenter = new MessageListPresenter(this, Injection.provideDatabase(), Injection.provideTransport());
 
         ButterKnife.bind(this);
 
@@ -105,6 +106,8 @@ public class MessageListActivity extends AppCompatActivity implements MessageLis
 
     @Override
     public void showLoadingSpinner(boolean loading) {
+        Log.d(TAG, "showLoadingSpinner() called with: loading = [" + loading + "]");
+
         swipeRefreshLayout.setRefreshing(loading);
     }
 

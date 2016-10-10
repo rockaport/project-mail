@@ -3,6 +3,8 @@ package com.rockaport.mobile.mail.messagelist;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 
+import com.rockaport.mobile.mail.messagelist.adapters.MessageListAdapter;
+
 class MessageListItemTouchHelper extends ItemTouchHelper.SimpleCallback {
     private MessageListContract.Presenter presenter;
 
@@ -19,6 +21,6 @@ class MessageListItemTouchHelper extends ItemTouchHelper.SimpleCallback {
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-        presenter.deleteMessage(((MessageListAdapter.ViewHolder) viewHolder).messageId);
+        presenter.deleteMessage(((MessageListAdapter.ViewHolder) viewHolder).getMessageId());
     }
 }

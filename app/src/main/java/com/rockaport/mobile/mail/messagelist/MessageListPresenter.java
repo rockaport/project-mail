@@ -1,23 +1,25 @@
 package com.rockaport.mobile.mail.messagelist;
 
 import com.rockaport.mobile.mail.database.DatabaseApi;
+import com.rockaport.mobile.mail.transport.TransportApi;
 
 import rx.Completable;
 import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 class MessageListPresenter implements MessageListContract.Presenter {
     private MessageListContract.View view;
     private DatabaseApi databaseApi;
+    private TransportApi transportApi;
 
-    MessageListPresenter(MessageListContract.View view, DatabaseApi databaseApi) {
-        if (view == null || databaseApi == null) {
-            throw new RuntimeException("View or database is null");
+    MessageListPresenter(MessageListContract.View view, DatabaseApi databaseApi, TransportApi transportApi) {
+        if (view == null || databaseApi == null || transportApi == null) {
+            throw new RuntimeException("View, database, or transport is null");
         }
 
         this.view = view;
         this.databaseApi = databaseApi;
+        this.transportApi = transportApi;
     }
 
     @Override
@@ -42,10 +44,10 @@ class MessageListPresenter implements MessageListContract.Presenter {
     @Override
     public void loadMessages() {
         view.showLoadingSpinner(true);
-
-        Observable.fromCallable(() -> databaseApi.getMessages())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+        Observable.concat(Observable.fromCallable(() -> transportApi.receive())
+                        .flatMapIterable(messages -> messages)
+                        .flatMap(message -> Completable.fromAction(() -> databaseApi.saveMessage(message)).toObservable()),
+                Observable.fromCallable(() -> databaseApi.getMessages()))
                 .doOnTerminate(() -> view.showLoadingSpinner(false))
                 .subscribe(messages -> {
                     view.showMessages(messages);

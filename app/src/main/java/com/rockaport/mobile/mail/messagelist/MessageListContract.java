@@ -1,11 +1,11 @@
 package com.rockaport.mobile.mail.messagelist;
 
-import com.rockaport.mobile.mail.message.Message;
+import com.rockaport.mobile.mail.models.message.Message;
 
 import java.util.List;
 
-class MessageListContract {
-    interface View {
+public class MessageListContract {
+    public interface View {
         void removeMessage(long messageId);
 
         void showComposeMessage();
@@ -17,13 +17,13 @@ class MessageListContract {
         void showMessages(List<Message> messages);
     }
 
-    interface ListView {
+    public interface ListView {
         void showMessages(List<Message> messages);
 
         void removeMessage(long messageId);
     }
 
-    interface Presenter {
+    public interface Presenter {
         void composeMessage();
 
         void openMessage(long messageId);
